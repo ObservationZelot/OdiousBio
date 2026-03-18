@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     public Camera playerCamera;
     public float walkSpeed = 6f;
@@ -22,15 +24,35 @@ public class PlayerMovement : MonoBehaviour
 
     private bool canMove = true;
 
-    void Start()
+
+    public override void OnNetworkSpawn()
     {
+
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        if (!IsOwner)
+        {
+            // Disable camera and audio listener for everyone else
+            Camera Camera = GetComponentInChildren<Camera>();
+            if (Camera != null)
+            {
+                Camera.enabled = false;
+
+                // It's also common to disable the AudioListener to avoid "multiple listener" warnings
+                AudioListener listener = Camera.GetComponent<AudioListener>();
+                if (listener != null) listener.enabled = false;
+            }
+        }
     }
+
 
     void Update()
     {
+        if (IsOwner)
+        {
+            return;
+        }
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
