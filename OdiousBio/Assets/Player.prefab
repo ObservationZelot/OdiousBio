@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: -6017510973615916965}
   - component: {fileID: 7186273463153983710}
   - component: {fileID: -8394861208138778251}
-  - component: {fileID: -656864408737246058}
+  - component: {fileID: -3329985036699846232}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -271,7 +271,7 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &-656864408737246058
+--- !u!114 &-3329985036699846232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -282,8 +282,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d9da811445b7a540884e99092904888, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OwnershipManager
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraSetup
   ShowTopMostFoldoutHeaderGroup: 1
+  playerCamera: {fileID: 8017552869548580243}
+  audioListener: {fileID: 4976852607413456305}
 --- !u!1 &8485785575435314212
 GameObject:
   m_ObjectHideFlags: 0

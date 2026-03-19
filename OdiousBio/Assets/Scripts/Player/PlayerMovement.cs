@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : NetworkBehaviour
@@ -25,31 +26,23 @@ public class PlayerMovement : NetworkBehaviour
     private bool canMove = true;
 
 
-    public override void OnNetworkSpawn()
+ 
+    
+    private void Start()
     {
-
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        if (!IsOwner)
+        if (IsLocalPlayer)
         {
-            // Disable camera and audio listener for everyone else
-            Camera Camera = GetComponentInChildren<Camera>();
-            if (Camera != null)
-            {
-                Camera.enabled = false;
-
-                // It's also common to disable the AudioListener to avoid "multiple listener" warnings
-                AudioListener listener = Camera.GetComponent<AudioListener>();
-                if (listener != null) listener.enabled = false;
-            }
+            playerCamera.gameObject.SetActive(true);
         }
     }
 
 
     void Update()
     {
-        if (IsOwner)
+        if (IsOwner == false)
         {
             return;
         }
